@@ -1,6 +1,8 @@
 package com.learn.service;
 
+import com.learn.model.Event;
 import com.learn.model.Ticket;
+import com.learn.model.User;
 
 import java.util.List;
 
@@ -8,13 +10,11 @@ import static com.learn.model.Ticket.Category;
 
 public interface TicketService {
 
-    Ticket createTicket(long id, long eventId, long userId, Category category, int place);
+    Ticket create(long userId, long eventId, Category category, int place);
 
-    Ticket getTicket(long id);
+    List<Ticket> getByUser(User user);
 
-    List<Ticket> getAllTickets();
+    List<Ticket> getByEvent(Event event);
 
-    Ticket updateTicket(long id, long eventId, long userId, Category category, int place);
-
-    Ticket deleteTicket(long id);
+    boolean delete(long id);
 }

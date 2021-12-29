@@ -2,11 +2,13 @@ package com.learn.dao.impl;
 
 import com.learn.dao.Dao;
 import com.learn.exceptions.IdAlreadyExistsException;
+import com.learn.model.Event;
 import com.learn.model.Ticket;
 import com.learn.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class TicketDao implements Dao<Ticket> {
@@ -25,14 +27,21 @@ public class TicketDao implements Dao<Ticket> {
         return Optional.ofNullable(tickets.get(id));
     }
 
-    @Override
-    public List<Ticket> getAll() {
-        return new ArrayList<>(tickets.values());
+    public List<Ticket> getByUser(User user) {
+        return tickets.values().stream()
+                .filter(t -> Objects.equals(user.getId(), t.getUserId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Ticket> getByEvent(Event event) {
+        return tickets.values().stream()
+                .filter(t -> Objects.equals(event.getId(), t.getEventId()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Ticket> update(Ticket ticket) {
-        return Optional.ofNullable(tickets.put(ticket.getId(), ticket));
+        return Optional.ofNullable(tickets.replace(ticket.getId(), ticket));
     }
 
     @Override

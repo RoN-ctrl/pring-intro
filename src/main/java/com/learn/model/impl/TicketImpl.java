@@ -7,11 +7,21 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TicketImpl implements Ticket {
+    private static long idCounter = 0;
+
     private long id;
     private long eventId;
     private long userId;
     private Category category;
     private int place;
+
+    public TicketImpl(long eventId, long userId, Category category, int place) {
+        this.id = ++idCounter;
+        this.eventId = eventId;
+        this.userId = userId;
+        this.category = category;
+        this.place = place;
+    }
 
     @Override
     public long getId() {

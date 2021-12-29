@@ -7,6 +7,7 @@ import com.learn.model.User;
 import com.learn.service.EventService;
 import com.learn.service.TicketService;
 import com.learn.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class BookingFacadeImpl implements BookingFacade {
     private TicketService ticketService;
     private EventService eventService;
 
+    @Autowired
     public BookingFacadeImpl(UserService userService, TicketService ticketService, EventService eventService) {
         this.userService = userService;
         this.ticketService = ticketService;
@@ -89,21 +91,23 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        return null;
+        return ticketService.create(userId, eventId, category, place);
     }
 
     @Override
+    //TODO add pagination
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return null;
+        return ticketService.getByUser(user);
     }
 
     @Override
+    //TODO add pagination
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return null;
+        return ticketService.getByEvent(event);
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
-        return false;
+        return ticketService.delete(ticketId);
     }
 }
