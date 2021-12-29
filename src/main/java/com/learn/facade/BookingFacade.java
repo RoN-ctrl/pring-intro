@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Groups together all operations related to tickets booking.
+ * Groups together all operations related to ticket booking.
  */
 public interface BookingFacade {
 
@@ -93,10 +93,11 @@ public interface BookingFacade {
     /**
      * Creates new user. User id should be auto-generated.
      *
-     * @param user User data.
+     * @param name Username.
+     * @param email User email.
      * @return Created User object.
      */
-    User createUser(User user);
+    User createUser(String name, String email);
 
     /**
      * Updates user using given data.
