@@ -1,18 +1,23 @@
 package com.learn.model.impl;
 
 import com.learn.model.Event;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 public class EventImpl implements Event {
+    private static long idCounter = 0;
+
     private long id;
     private String title;
     private Date date;
 
+    public EventImpl(String title, Date date) {
+        this.id = ++idCounter;
+        this.title = title;
+        this.date = date;
+    }
 
     @Override
     public long getId() {

@@ -2,41 +2,49 @@ package com.learn.dao.impl;
 
 import com.learn.dao.Dao;
 import com.learn.exceptions.IdAlreadyExistsException;
-import com.learn.model.Ticket;
+import com.learn.model.Event;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
-public class EventDao implements Dao<Ticket> {
-    private Map<Long, Ticket> tickets = new HashMap<>();
+public class EventDao implements Dao<Event> {
+    private Map<Long, Event> events = new HashMap<>();
 
     @Override
-    public Ticket save(Ticket ticket) throws IdAlreadyExistsException {
-        if (tickets.containsKey(ticket.getId())) {
-            throw new IdAlreadyExistsException("Ticket with id=" + ticket.getId() + " already exists");
+    public Event save(Event event) throws IdAlreadyExistsException {
+        if (events.containsKey(event.getId())) {
+            throw new IdAlreadyExistsException("Event with id=" + event.getId() + " already exists");
         }
-        return tickets.put(ticket.getId(), ticket);
+        return events.put(event.getId(), event);
     }
 
     @Override
-    public Optional<Ticket> getById(long id) {
-        return Optional.ofNullable(tickets.get(id));
+    public Optional<Event> getById(long id) {
+        return Optional.ofNullable(events.get(id));
+    }
+
+    public List<Event> getByTitle(String title) {
+        return events.values().stream()
+                .filter(e -> Objects.equals(title, e.getTitle()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Event> getByDay(Date day) {
+        return events.values().stream()
+                .filter(e -> Objects.equals(day, e.getDate()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Ticket> getAll() {
-        return new ArrayList<>(tickets.values());
-    }
-
-    @Override
-    public Optional<Ticket> update(Ticket ticket) {
-        return Optional.ofNullable(tickets.put(ticket.getId(), ticket));
+    public Optional<Event> update(Event event) {
+        return Optional.ofNullable(events.replace(event.getId(), event));
     }
 
     @Override
     public boolean delete(long id) {
-        tickets.remove(id);
-        return !tickets.containsKey(id);
+        events.remove(id);
+        return !events.containsKey(id);
     }
 }

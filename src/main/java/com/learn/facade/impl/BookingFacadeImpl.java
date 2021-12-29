@@ -26,32 +26,34 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public Event getEventById(long eventId) {
-        return null;
+        return eventService.getById(eventId);
     }
 
     @Override
+    //TODO add pagination
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return null;
+        return eventService.getByTitle(title);
     }
 
     @Override
+    //TODO add pagination
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return null;
+        return eventService.getByDay(day);
     }
 
     @Override
-    public Event createEvent(Event event) {
-        return null;
+    public Event createEvent(String title, Date date) {
+        return eventService.create(title, date);
     }
 
     @Override
-    public Event updateEvent(Event event) {
-        return null;
+    public Event updateEvent(long id, String title, Date date) {
+        return eventService.update(id, title, date);
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return false;
+        return eventService.deleteById(eventId);
     }
 
     @Override

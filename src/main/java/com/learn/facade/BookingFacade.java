@@ -44,18 +44,21 @@ public interface BookingFacade {
     /**
      * Creates new event. Event id should be auto-generated.
      *
-     * @param event Event data.
+     * @param title Event title.
+     * @param date  Event date.
      * @return Created Event object.
      */
-    Event createEvent(Event event);
+    Event createEvent(String title, Date date);
 
     /**
      * Updates event using given data.
      *
-     * @param event Event data for update. Should have id set.
+     * @param id    Event id.
+     * @param title Event title.
+     * @param date  Event date.
      * @return Updated Event object.
      */
-    Event updateEvent(Event event);
+    Event updateEvent(long id, String title, Date date);
 
     /**
      * Deletes event by its id.

@@ -7,13 +7,15 @@ import java.util.List;
 
 public interface EventService {
 
-    Event createEvent(long id, String title, Date date);
+    Event create(String title, Date date);
 
-    Event getEvent(long id);
+    Event getById(long id);
 
-    List<Event> getAllEvents();
+    List<Event> getByTitle(String title);
 
-    Event updateEvent(long id, String title, Date date);
+    List<Event> getByDay(Date day);
 
-    Event deleteEvent(long id);
+    Event update(long id, String title, Date date);
+
+    boolean deleteById(long id);
 }
