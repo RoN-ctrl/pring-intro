@@ -9,11 +9,11 @@ public interface Dao<T> {
 
     T save(T t) throws IdAlreadyExistsException;
 
-    Optional<T> get(long id);
+    Optional<T> getById(long id);
 
     List<T> getAll();
 
     Optional<T> update(T t);
 
-    Optional<T> delete(long id);
+    boolean delete(long id);
 }

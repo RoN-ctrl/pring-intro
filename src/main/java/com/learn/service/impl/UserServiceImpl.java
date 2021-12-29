@@ -18,30 +18,35 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
-    public User createUser(String name, String email) {
+    public User create(String name, String email) {
         return userDao.save(new UserImpl(name, email));
     }
 
     @Override
-    public User getUser(long id) {
-        return userDao.get(id).orElseThrow();
+    public User getById(long id) {
+        return userDao.getById(id).orElseThrow();
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userDao.getAll();
+    public User getByEmail(String email) {
+        return userDao.getByEmail(email).orElseThrow();
     }
 
     @Override
-    public User updateUser(long id, String name, String email) {
-        User user = getUser(id);
+    public List<User> getByName(String name) {
+        return userDao.getByName(name);
+    }
+
+    @Override
+    public User update(long id, String name, String email) {
+        User user = getById(id);
         user.setName(name);
         user.setEmail(email);
         return userDao.update(user).orElseThrow();
     }
 
     @Override
-    public User deleteUser(long id) {
-        return userDao.delete(id).orElseThrow();
+    public boolean deleteById(long id) {
+        return userDao.delete(id);
     }
 }

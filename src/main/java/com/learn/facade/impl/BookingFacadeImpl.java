@@ -7,7 +7,6 @@ import com.learn.model.User;
 import com.learn.service.EventService;
 import com.learn.service.TicketService;
 import com.learn.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -57,32 +56,33 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public User getUserById(long userId) {
-        return userService.getUser(userId);
+        return userService.getById(userId);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return null;
+        return userService.getByEmail(email);
     }
 
     @Override
+    //TODO add pagination
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return null;
+        return userService.getByName(name);
     }
 
     @Override
     public User createUser(String name, String email) {
-        return userService.createUser(name, email);
+        return userService.create(name, email);
     }
 
     @Override
-    public User updateUser(User user) {
-        return null;
+    public User updateUser(long id, String name, String email) {
+        return userService.update(id, name, email);
     }
 
     @Override
     public boolean deleteUser(long userId) {
-        return false;
+        return userService.deleteById(userId);
     }
 
     @Override

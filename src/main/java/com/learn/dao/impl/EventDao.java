@@ -20,7 +20,7 @@ public class EventDao implements Dao<Ticket> {
     }
 
     @Override
-    public Optional<Ticket> get(long id) {
+    public Optional<Ticket> getById(long id) {
         return Optional.ofNullable(tickets.get(id));
     }
 
@@ -35,7 +35,8 @@ public class EventDao implements Dao<Ticket> {
     }
 
     @Override
-    public Optional<Ticket> delete(long id) {
-        return Optional.ofNullable(tickets.remove(id));
+    public boolean delete(long id) {
+        tickets.remove(id);
+        return !tickets.containsKey(id);
     }
 }

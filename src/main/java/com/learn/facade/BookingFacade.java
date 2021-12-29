@@ -93,7 +93,7 @@ public interface BookingFacade {
     /**
      * Creates new user. User id should be auto-generated.
      *
-     * @param name Username.
+     * @param name  Username.
      * @param email User email.
      * @return Created User object.
      */
@@ -102,10 +102,12 @@ public interface BookingFacade {
     /**
      * Updates user using given data.
      *
-     * @param user User data for update. Should have id set.
+     * @param id    User id.
+     * @param name  Username.
+     * @param email User email.
      * @return Updated User object.
      */
-    User updateUser(User user);
+    User updateUser(long id, String name, String email);
 
     /**
      * Deletes user by its id.

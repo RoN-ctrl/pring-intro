@@ -6,6 +6,7 @@ import com.learn.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class UserDao implements Dao<User> {
@@ -20,22 +21,30 @@ public class UserDao implements Dao<User> {
     }
 
     @Override
-    public Optional<User> get(long id) {
+    public Optional<User> getById(long id) {
         return Optional.ofNullable(users.get(id));
     }
 
-    @Override
-    public List<User> getAll() {
-        return new ArrayList<>(users.values());
+    public Optional<User> getByEmail(String email) {
+        return users.values().stream()
+                .filter(u -> Objects.equals(email, u.getEmail()))
+                .findFirst();
+    }
+
+    public List<User> getByName(String name) {
+        return users.values().stream()
+                .filter(u -> Objects.equals(name, u.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<User> update(User user) {
-        return Optional.ofNullable(users.put(user.getId(), user));
+        return Optional.ofNullable(users.replace(user.getId(), user));
     }
 
     @Override
-    public Optional<User> delete(long id) {
-        return Optional.ofNullable(users.remove(id));
+    public boolean delete(long id) {
+        users.remove(id);
+        return !users.containsKey(id);
     }
 }
