@@ -23,23 +23,19 @@ public interface BookingFacade {
      * Get list of events by matching title. Title is matched using 'contains' approach.
      * In case nothing was found, empty list is returned.
      *
-     * @param title    Event title or it's part.
-     * @param pageSize Pagination param. Number of events to return on a page.
-     * @param pageNum  Pagination param. Number of the page to return. Starts from 1.
+     * @param title Event title or it's part.
      * @return List of events.
      */
-    List<Event> getEventsByTitle(String title, int pageSize, int pageNum);
+    List<Event> getEventsByTitle(String title);
 
     /**
      * Get list of events for specified day.
      * In case nothing was found, empty list is returned.
      *
-     * @param day      Date object from which day information is extracted.
-     * @param pageSize Pagination param. Number of events to return on a page.
-     * @param pageNum  Pagination param. Number of the page to return. Starts from 1.
+     * @param day Date object from which day information is extracted.
      * @return List of events.
      */
-    List<Event> getEventsForDay(Date day, int pageSize, int pageNum);
+    List<Event> getEventsForDay(Date day);
 
     /**
      * Creates new event. Event id should be auto-generated.
@@ -86,12 +82,10 @@ public interface BookingFacade {
      * Get list of users by matching name. Name is matched using 'contains' approach.
      * In case nothing was found, empty list is returned.
      *
-     * @param name     Users name or it's part.
-     * @param pageSize Pagination param. Number of users to return on a page.
-     * @param pageNum  Pagination param. Number of the page to return. Starts from 1.
+     * @param name Users name or it's part.
      * @return List of users.
      */
-    List<User> getUsersByName(String name, int pageSize, int pageNum);
+    List<User> getUsersByName(String name);
 
     /**
      * Creates new user. User id should be auto-generated.
@@ -135,22 +129,18 @@ public interface BookingFacade {
     /**
      * Get all booked tickets for specified user. Tickets should be sorted by event date in descending order.
      *
-     * @param user     User
-     * @param pageSize Pagination param. Number of tickets to return on a page.
-     * @param pageNum  Pagination param. Number of the page to return. Starts from 1.
+     * @param user User
      * @return List of Ticket objects.
      */
-    List<Ticket> getBookedTickets(User user, int pageSize, int pageNum);
+    List<Ticket> getBookedTickets(User user);
 
     /**
      * Get all booked tickets for specified event. Tickets should be sorted in by user email in ascending order.
      *
-     * @param event    Event
-     * @param pageSize Pagination param. Number of tickets to return on a page.
-     * @param pageNum  Pagination param. Number of the page to return. Starts from 1.
+     * @param event Event
      * @return List of Ticket objects.
      */
-    List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum);
+    List<Ticket> getBookedTickets(Event event);
 
     /**
      * Cancel ticket with a specified id.

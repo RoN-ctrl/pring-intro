@@ -32,14 +32,12 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    //TODO add pagination
-    public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
+    public List<Event> getEventsByTitle(String title) {
         return eventService.getByTitle(title);
     }
 
     @Override
-    //TODO add pagination
-    public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
+    public List<Event> getEventsForDay(Date day) {
         return eventService.getByDay(day);
     }
 
@@ -69,8 +67,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    //TODO add pagination
-    public List<User> getUsersByName(String name, int pageSize, int pageNum) {
+    public List<User> getUsersByName(String name) {
         return userService.getByName(name);
     }
 
@@ -95,14 +92,12 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    //TODO add pagination
-    public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
+    public List<Ticket> getBookedTickets(User user) {
         return ticketService.getByUser(user);
     }
 
     @Override
-    //TODO add pagination
-    public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
+    public List<Ticket> getBookedTickets(Event event) {
         return ticketService.getByEvent(event);
     }
 
