@@ -17,7 +17,8 @@ public class UserDao implements Dao<User> {
         if (users.containsKey(user.getId())) {
             throw new IdAlreadyExistsException("User with id=" + user.getId() + " already exists");
         }
-        return users.put(user.getId(), user);
+        users.put(user.getId(), user);
+        return user;
     }
 
     @Override

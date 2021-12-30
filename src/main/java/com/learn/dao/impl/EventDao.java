@@ -17,7 +17,8 @@ public class EventDao implements Dao<Event> {
         if (events.containsKey(event.getId())) {
             throw new IdAlreadyExistsException("Event with id=" + event.getId() + " already exists");
         }
-        return events.put(event.getId(), event);
+        events.put(event.getId(), event);
+        return event;
     }
 
     @Override

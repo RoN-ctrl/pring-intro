@@ -19,7 +19,8 @@ public class TicketDao implements Dao<Ticket> {
         if (tickets.containsKey(ticket.getId())) {
             throw new IdAlreadyExistsException("Ticket with id=" + ticket.getId() + " already exists");
         }
-        return tickets.put(ticket.getId(), ticket);
+        tickets.put(ticket.getId(), ticket);
+        return ticket;
     }
 
     @Override
