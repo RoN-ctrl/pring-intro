@@ -2,8 +2,8 @@ package com.learn.facade.impl;
 
 import com.learn.config.AppConfig;
 import com.learn.model.Event;
+import com.learn.model.User;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,6 +23,8 @@ class BookingFacadeImplTest {
 
     public static final String EVENT_TITLE = "Giselle";
     public static final String EVENT_DATE = "20/02/2021 18:00";
+    public static final String USER_NAME = "Jack";
+    public static final String USER_EMAIL = "jack@test.com";
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -125,33 +127,63 @@ class BookingFacadeImplTest {
     }
 
     @Test
-    void createUserTest() {
-        fail();
-    }
-
-    @Test
     void getUserByIdTest() {
-        fail();
+        User user = createTestUser();
+        User userById = bookingFacade.getUserById(user.getId());
+
+        assertNotNull(userById);
+        assertEquals(user, userById);
     }
 
     @Test
     void getUserByEmailTest() {
-        fail();
+        User user = createTestUser();
+        User userByEmail = bookingFacade.getUserByEmail(user.getEmail());
+
+        assertNotNull(userByEmail);
+        assertEquals(user, userByEmail);
     }
 
     @Test
     void getUsersByNameTest() {
-        fail();
+        User user = createTestUser();
+        List<User> usersByName = bookingFacade.getUsersByName(user.getName());
+
+        assertNotNull(usersByName);
+        assertTrue(usersByName.contains(user));
+    }
+
+    @Test
+    void createUserTest() {
+        User user = createTestUser();
+
+        assertNotNull(user);
+        assertAll(
+                () -> assertEquals(USER_NAME, user.getName()),
+                () -> assertEquals(USER_EMAIL, user.getEmail())
+        );
     }
 
     @Test
     void updateUserTest() {
-        fail();
+        User user = createTestUser();
+        String updatedName = "Updated Jack";
+        String updatedEmail = "jach@updated.com";
+        User updatedUser = bookingFacade.updateUser(user.getId(), updatedName, updatedEmail);
+
+        assertNotNull(updatedUser);
+        assertAll(
+                () -> assertEquals(updatedName, updatedUser.getName()),
+                () -> assertEquals(updatedEmail, updatedUser.getEmail())
+        );
     }
 
     @Test
     void deleteUserTest() {
-        fail();
+        User user = createTestUser();
+
+        assertTrue(bookingFacade.deleteUser(user.getId()));
+        assertFalse(bookingFacade.getUsersByName(user.getName()).contains(user));
     }
 
     @Test
@@ -177,5 +209,9 @@ class BookingFacadeImplTest {
     @SneakyThrows
     private Event createTestEvent() {
         return bookingFacade.createEvent(EVENT_TITLE, DATE_FORMAT.parse(EVENT_DATE));
+    }
+
+    private User createTestUser() {
+        return bookingFacade.createUser(USER_NAME, USER_EMAIL);
     }
 }
