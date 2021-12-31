@@ -6,6 +6,6 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan(basePackages = "com.learn")
-@PropertySource("classpath:application.yml")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
 }

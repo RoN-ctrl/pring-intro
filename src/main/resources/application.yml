@@ -1,0 +1,2 @@
+p:
+  users: src/main/resources/data/populate_users.txt

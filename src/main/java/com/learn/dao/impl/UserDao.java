@@ -3,14 +3,37 @@ package com.learn.dao.impl;
 import com.learn.dao.Dao;
 import com.learn.exceptions.IdAlreadyExistsException;
 import com.learn.model.User;
+import com.learn.model.impl.UserImpl;
+import com.learn.util.Utils;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class UserDao implements Dao<User> {
-    private Map<Long, User> users = new HashMap<>();
+    private final Map<Long, User> users = new HashMap<>();
+
+    @Value("${p.users}")
+    String filePath;
+
+    @PostConstruct
+    @SneakyThrows
+    public void populateUsers() {
+        List<String> usersFromFile = Utils.readLines(filePath);
+        int indexForName = "name".length() + 1;
+        int indexForEmail = "email".length() + 1;
+
+        for (String user : usersFromFile) {
+            String[] split = user.split(",");
+            if (split.length == 2) {
+                save(new UserImpl(split[0].substring(indexForName), split[1].substring(indexForEmail)));
+            }
+        }
+    }
 
     @Override
     public User save(User user) throws IdAlreadyExistsException {
