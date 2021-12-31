@@ -1,6 +1,6 @@
 package com.learn.dao;
 
-import com.learn.exceptions.IdAlreadyExistsException;
+import com.learn.exception.IdAlreadyExistsException;
 
 import java.util.Optional;
 

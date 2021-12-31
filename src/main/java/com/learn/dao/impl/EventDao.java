@@ -1,7 +1,7 @@
 package com.learn.dao.impl;
 
 import com.learn.dao.Dao;
-import com.learn.exceptions.IdAlreadyExistsException;
+import com.learn.exception.IdAlreadyExistsException;
 import com.learn.model.Event;
 import com.learn.model.impl.EventImpl;
 import com.learn.util.Utils;
