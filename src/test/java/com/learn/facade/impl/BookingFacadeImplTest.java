@@ -2,11 +2,11 @@ package com.learn.facade.impl;
 
 import com.learn.config.AppConfig;
 import com.learn.model.Event;
+import com.learn.model.Ticket;
 import com.learn.model.User;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -17,53 +17,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith({MockitoExtension.class, SpringExtension.class})
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = AppConfig.class)
 class BookingFacadeImplTest {
 
-    public static final String EVENT_TITLE = "Giselle";
-    public static final String EVENT_DATE = "20/02/2021 18:00";
-    public static final String USER_NAME = "Jack";
-    public static final String USER_EMAIL = "jack@test.com";
+    private static final String EVENT_TITLE = "Giselle";
+    private static final String EVENT_DATE = "20/02/2021 18:00";
+    private static final String USER_NAME = "Jack";
+    private static final String USER_EMAIL = "jack@test.com";
+    private static final int PLACE = 17;
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    //    @InjectMocks
     @Autowired
     private BookingFacadeImpl bookingFacade;
-
-//    @Mock
-//    UserService userService;
-//
-//    @Mock
-//    TicketService ticketService;
-//
-//    @Mock
-//    EventService eventService;
-
-//    @Mock
-//    private static UserDao userDao;
-//    @Mock
-//    private static EventDao eventDao;
-//    @Mock
-//    private static TicketDao ticketDao;
-//    @InjectMocks
-//    private static UserService userService = new UserServiceImpl();
-//    @InjectMocks
-//    private static TicketService ticketService = new TicketServiceImpl();
-//    @InjectMocks
-//    private static EventService eventService = new EventServiceImpl();
-//
-//    @BeforeAll
-//    static void beforeAll() {
-//        bookingFacade = new BookingFacadeImpl(userService, ticketService, eventService);
-//    }
-
-
-//    @BeforeAll
-//    static void beforeAll() {
-//        booki
-//    }
 
     @Test
     void getEventByIdTest() {
@@ -188,22 +155,52 @@ class BookingFacadeImplTest {
 
     @Test
     void bookTicketTest() {
-        fail();
+        User user = createTestUser();
+        Event event = createTestEvent();
+
+        Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), PLACE, Ticket.Category.STANDARD);
+
+        assertNotNull(ticket);
+        assertAll(
+                () -> assertEquals(user.getId(), ticket.getUserId()),
+                () -> assertEquals(event.getId(), ticket.getEventId()),
+                () -> assertEquals(PLACE, ticket.getPlace()),
+                () -> assertEquals(Ticket.Category.STANDARD, ticket.getCategory())
+        );
     }
 
     @Test
-    void getBookedTicketsTest() {
-        fail();
+    void getBookedTicketsByUserTest() {
+        User user = createTestUser();
+        Event event = createTestEvent();
+        Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), PLACE, Ticket.Category.STANDARD);
+
+        List<Ticket> bookedByUser = bookingFacade.getBookedTickets(user);
+
+        assertNotNull(bookedByUser);
+        assertTrue(bookedByUser.contains(ticket));
     }
 
     @Test
-    void testGetBookedTicketsTest() {
-        fail();
+    void GetBookedTicketsByEventTest() {
+        User user = createTestUser();
+        Event event = createTestEvent();
+        Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), PLACE, Ticket.Category.STANDARD);
+
+        List<Ticket> bookedByEvent = bookingFacade.getBookedTickets(event);
+
+        assertNotNull(bookedByEvent);
+        assertTrue(bookedByEvent.contains(ticket));
     }
 
     @Test
     void cancelTicketTest() {
-        fail();
+        User user = createTestUser();
+        Event event = createTestEvent();
+        Ticket ticket = bookingFacade.bookTicket(user.getId(), event.getId(), PLACE, Ticket.Category.STANDARD);
+
+        assertTrue(bookingFacade.cancelTicket(ticket.getId()));
+        assertFalse(bookingFacade.getBookedTickets(user).contains(ticket));
     }
 
     @SneakyThrows
