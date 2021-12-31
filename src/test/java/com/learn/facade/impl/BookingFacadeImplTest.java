@@ -1,13 +1,17 @@
 package com.learn.facade.impl;
 
 import com.learn.config.AppConfig;
+import com.learn.facade.BookingFacade;
 import com.learn.model.Event;
 import com.learn.model.Ticket;
 import com.learn.model.User;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -17,9 +21,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = AppConfig.class)
 class BookingFacadeImplTest {
+
+    private static BookingFacade bookingFacade;
 
     private static final String EVENT_TITLE = "Giselle";
     private static final String EVENT_DATE = "20/02/2021 18:00";
@@ -29,8 +35,15 @@ class BookingFacadeImplTest {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    @Autowired
-    private BookingFacadeImpl bookingFacade;
+//    @Autowired
+//    private BookingFacadeImpl bookingFacade;
+
+
+    @BeforeAll
+    static void beforeAll() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        bookingFacade = context.getBean(BookingFacade.class);
+    }
 
     @Test
     void getEventByIdTest() {
