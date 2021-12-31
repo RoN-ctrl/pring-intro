@@ -2,9 +2,7 @@ package com.learn.service.impl;
 
 import com.learn.dao.impl.EventDao;
 import com.learn.model.Event;
-import com.learn.model.User;
 import com.learn.model.impl.EventImpl;
-import com.learn.model.impl.TicketImpl;
 import com.learn.service.EventService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;

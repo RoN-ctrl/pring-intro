@@ -15,9 +15,9 @@ import java.util.List;
 
 @Component
 public class BookingFacadeImpl implements BookingFacade {
-    private UserService userService;
-    private TicketService ticketService;
-    private EventService eventService;
+    private final UserService userService;
+    private final TicketService ticketService;
+    private final EventService eventService;
 
     @Autowired
     public BookingFacadeImpl(UserService userService, TicketService ticketService, EventService eventService) {
